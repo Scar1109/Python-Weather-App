@@ -41,12 +41,12 @@
                         placeholder="Enter country name"
                         class="form-control w-25 mx-3"
                     />
-                    <input
+                </div>
+                <input
                         type="submit"
                         value="Find"
-                        class="btn btn-primary mx-3"
+                        class="btn btn-primary mx-3 mt-4"
                     />
-                </div>
             </form>
             {% if data %}
             <div class="mt-5 p-5 w-25 bg-dark">
@@ -59,7 +59,7 @@
                 <h3>{{ data['temperature'] }}°C</h3>
                 <h4>{{ data['description'] }}</h4>
                 <h5>Humidity: {{ data['humidity'] }}%</h5>
-                <h5>Feels Like: {{data['feels_like']}}</h5>
+                <h5>Feels Like: {{data['feels_like']}}°C</h5>
             </div>
             {% endif %}
         </div>

@@ -11,8 +11,8 @@ class WeatherData:
     main: str
     description: str
     icon: str
-    temperature: float
-    feels_like : float
+    temperature: int
+    feels_like : int
     humidity : int
 
 def get_lat_lon(city_name, state_code, country_code, API_key):
@@ -44,8 +44,8 @@ def get_weather_data(lat, lon, API_key):
             main = response.get('weather')[0].get('main'),
             description= response.get('weather')[0].get('description'),
             icon = response.get('weather')[0].get('icon'),
-            temperature= response.get('main').get('temp'),
-            feels_like= response.get('main').get('feels_like'),
+            temperature= int(response.get('main').get('temp')),
+            feels_like= int(response.get('main').get('feels_like')),
             humidity= response.get('main').get('humidity')
         )
         return data
