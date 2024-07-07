@@ -61,4 +61,8 @@ def main(city_name, state_name, country_name):
     
     
 if __name__ == '__main__':
-    print(main('Ambalangoda', 'Galle', 'SriLanka'))
+    city_name = 'New York'
+    state_name = 'New York'
+    country_name = 'US'
+    data = main(city_name, state_name, country_name)
+    print(data)
