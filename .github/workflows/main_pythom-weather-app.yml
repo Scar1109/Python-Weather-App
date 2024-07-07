@@ -1,0 +1,51 @@
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+
+name: Build and deploy container app to Azure Web App - pythom-weather-app
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: 'ubuntu-latest'
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Log in to registry
+      uses: docker/login-action@v2
+      with:
+        registry: https://weatherappcicd.azurecr.io/
+        username: ${{ secrets.AzureAppService_ContainerUsername_3622b644ce8646f5895b161a9918989d }}
+        password: ${{ secrets.AzureAppService_ContainerPassword_e0ea7393936d444896831eedd5ad6e46 }}
+
+    - name: Build and push container image to registry
+      uses: docker/build-push-action@v3
+      with:
+        push: true
+        tags: weatherappcicd.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_3622b644ce8646f5895b161a9918989d }}/weatherappcicd/weatherappcicd/weather-app:${{ github.sha }}
+        file: ./Dockerfile
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: 'production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
+    steps:
+    - name: Deploy to Azure Web App
+      id: deploy-to-webapp
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'pythom-weather-app'
+        slot-name: 'production'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_15019b712348451a81f6ea81061b2899 }}
+        images: 'weatherappcicd.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_3622b644ce8646f5895b161a9918989d }}/weatherappcicd/weatherappcicd/weather-app:${{ github.sha }}'
