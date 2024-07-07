@@ -64,7 +64,7 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'python-weather-app'
+          app-name: 'pythom-weather-app'
           slot-name: 'production'
           publish-profile: ${{ secrets.AzureAppService_PublishProfile_29f87205516a44b3810b2c375e3654b3 }}
           images: 'weatherappcicd.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_0c85daab7bb4443ca11250bef33d17b5 }}/weatherappcicd/weather-app:${{ github.sha }}'
