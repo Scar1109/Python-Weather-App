@@ -45,7 +45,7 @@ jobs:
               run: |
                   git config --global user.name 'github-actions[bot]'
                   git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-                  git merge main --no-edit --no-ff
+                  git merge main --no-edit --no-ff --allow-unrelated-histories
 
             - name: Push changes to deployment
               run: git push origin deployment
